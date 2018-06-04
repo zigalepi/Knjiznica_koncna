@@ -1,0 +1,154 @@
+button {
+    padding: 10px;
+}
+.slikadomov{
+    width: 55%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#A04C32;
+    padding:0px;
+}
+
+.police{
+    margin-top:5%;
+}
+body{
+    background-color: #e6ffff;
+}
+ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+li p {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    margin:0 0 ;
+}
+
+li input{
+    color:black;
+    margin:11px;
+}
+li button {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+    text-decoration: none;
+    color:white;
+}
+.active {
+    background-color: #0053ff;
+}
+div.userData{
+
+    border-radius: 10px;
+    background-color: royalblue;
+    width: 100%;
+    padding:10px;
+
+}
+div.container{
+    margin: 10px 10px 10px 10px;
+    width:100%;
+}
+div.container1{
+    padding: 10px 10px 10px 10px;
+    width:100%;
+    margin-top:20px;
+    margin-bottom: 20px;
+    background-color:cornflowerblue;
+    border:3px solid;
+    border-radius: 10px;
+}
+div.container2{
+    border:3px solid black;
+    border-radius:10px;
+    font-size: 30px;
+    background-color: white;
+    width:100%;
+    padding: 10px 10px 10px 10px;
+    width:100%;
+}
+h3.reg{
+    margin-top:0px;
+    margin-bottom:0px;
+}
+#submit-reg,#reset-uredi-profil{
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #0053ff;
+    color:white;
+    width: 100px;
+}
+
+.slika_police{
+    width: 33%;
+    margin:0px;
+}
+.alert{
+    margin-bottom:15px;
+    padding:5px;
+    margin-top:5px;
+}
+.neprijavljen{
+    display:none;
+}
+.prijavljen{
+    display:none;
+}
+table.tIzpis{
+    font-size:24px;
+    border:2px black solid;
+    padding:10px;
+    margin:0 auto;
+    width:100%;
+}
+tr.tIzpis{
+    border:1px solid black;
+}
+th.tIzpis{
+    border:2px solid black;
+    width: 20%;
+    padding:5px 5px 5px 0;
+}
+td.tIzpis{
+    border: 1px solid black;
+    width: 20%;
+    padding:5px 5px 5px 0;
+}
+ul.seznamKnjig, .seznamKnjig li{
+    background-color: white;
+    Display:block;
+    float: none;
+}
+
+.profilCon{
+    border: 3px;
+    border-color: black;
+    background-color: cornflowerblue;
+}
