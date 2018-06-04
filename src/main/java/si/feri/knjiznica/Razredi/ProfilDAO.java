@@ -1,10 +1,5 @@
 package si.feri.knjiznica.Razredi;
 
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +20,7 @@ public class ProfilDAO {
 
         Connection connection = ConnectionManager.getConnection();
 
-        List<Knjiga> knjige = new ArrayList<>();
-
         String sql = "SELECT * FROM knjiga k, izposoja i, uporabnik u WHERE k.idKnjiga = i.tk_idKnjiga and i.tk_idUporabnik = u.idUporabnik AND u.idUporabnik = " + id;
-
 
         Statement statement = connection.createStatement();
 
@@ -37,23 +29,12 @@ public class ProfilDAO {
         Uporabnik uporabnik = new Uporabnik();
 
         while (resultSet.next()) {
-            Knjiga knjiga = new Knjiga(resultSet.getInt("idKnjiga"), resultSet.getString("naslov"), resultSet.getString("avtor"),
-                    resultSet.getInt("isbn"), resultSet.getString("zalozba"),
-                    resultSet.getInt("letoIzdaje"), resultSet.getString("prevod"),
-                    resultSet.getString("ilustracije"), resultSet.getString("zanr"),
-                    resultSet.getString("publika"), resultSet.getString("lokacija"));
-            knjige.add(knjiga);
-            //int idKnjiga, String naslov, String avtor, int isbn, String zalozba, int letoIzdaje,
-            // String prevod, String ilustracije, String lokacija, String zanr, String publika
 
-            //Knjiga knjiga = new Knjiga(); // konstruktor z vsemi parametri
-            //knjiga.setNaslov(resultSet.getString("naslov"));
+            uporabnik.dodajIzposojenoKnjigo(knjigar(resultSet));
 
-
-            uporabnik.dodajKnjigo(knjiga);
-
-            //knjige.add(new Knjiga(resultSet.getString("naslov"), resultSet.getString("avtor"),resultSet.getString("zalozba")));
         }
+
+        uporabnik.setMojeKnjige(mojeKnjige(id));
 
 
         //profilUporabnika.setIzposojeneKnjige(knjige);
@@ -189,5 +170,39 @@ public class ProfilDAO {
         statement1.setString(2, kraj.getNaziv());
         statement1.setInt(3, kraj.getIdKraj());
         statement1.executeUpdate();
+    }
+    public List<Knjiga> mojeKnjige(int id) throws SQLException {
+
+        List<Knjiga> mojeKnjige = new ArrayList<>();
+
+
+        Connection connection = ConnectionManager.getConnection();
+
+
+        String sql = "SELECT * FROM knjiga k WHERE k.tk_idUporabnik = " + id;
+
+
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        while (resultSet.next()) {
+
+            mojeKnjige.add(knjigar(resultSet));
+
+        }
+
+
+
+        return mojeKnjige;
+    }
+    public Knjiga knjigar(ResultSet resultSet) throws SQLException {
+        Knjiga knjiga = new Knjiga(resultSet.getInt("idKnjiga"), resultSet.getString("naslov"), resultSet.getString("avtor"),
+                resultSet.getInt("isbn"), resultSet.getString("zalozba"),
+                resultSet.getInt("letoIzdaje"), resultSet.getString("prevod"),
+                resultSet.getString("ilustracije"), resultSet.getString("zanr"),
+                resultSet.getString("publika"), resultSet.getString("lokacija"));
+
+        return knjiga;
     }
 }

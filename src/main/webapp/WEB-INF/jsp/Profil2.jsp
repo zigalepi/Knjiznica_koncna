@@ -28,7 +28,7 @@
 
                     <div class="col-sm-4">
                         <h1>
-                            MOJA KNJIŽNCA!
+                            MOJA KNJIŽNICA!
                         </h1>
                     </div>
                     <div class="col-sm-4"></div>
@@ -108,36 +108,39 @@
 
         </div>
 
-        <div class="container">
-            <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#profil2">Profil</a></li>
-                <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-                <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
-                <li><a data-toggle="tab" href="UrediProfil">Uredi profil</a></li>
+        <nav class="navbar navbar-inverse">
+            <ul class="nav navbar-nav">
+                <li><a href="profil">Moj profil</a></li>
+                <li><a href="UrediProfil">Uredi profil</a></li>
             </ul>
-
-            <div class="tab-content">
-                <div id="home" class="tab-pane fade in active">
-                    <h3>Profil</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </div>
-                <div id="menu1" class="tab-pane fade">
-                    <h3>Menu 1</h3>
-                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
-                <div id="menu2" class="tab-pane fade">
-                    <h3>Menu 2</h3>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                </div>
-            </div>
-        </div>
-
+            <p class="navbar-text">Ti pa si pravi knjižni molj!</p>
+        </nav>
         <!-- ------------------------------------- -->
+        <div class="container1">
+        <h3>Izposojene knjige</h3>
         <ul class="seznamKnjig">
             <c:forEach items="${uporabnik.izposojeneKnjige}" var="knjiga">
                 <li><b>${knjiga.avtor}</b>: ${knjiga.naslov}</li>
             </c:forEach>
         </ul>
+        </div>
+        <div class="container1">
+        <h3>Moje knjige</h3>
+            <ul  class="seznamKnjig">
+            <c:forEach items="${uporabnik.mojeKnjige}" var="knjiga">
+                <li><b>${knjiga.avtor}</b>: ${knjiga.naslov}</li>
+            </c:forEach>
+            </ul>
+        </div>
+
+        <div class="container1">
+            <h3>Seznam željenih knjig</h3>
+            <ul  class="seznamKnjig">
+                <p>tukj vpisi gasper ali ziga drugo <b>NE DIRAJ!!</b></p>
+
+            </ul>
+        </div>
+
     </div>
 </div>
 

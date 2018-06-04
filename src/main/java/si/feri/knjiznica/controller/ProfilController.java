@@ -18,10 +18,14 @@ public class ProfilController {
     @RequestMapping(value = {"/profil" }, method = RequestMethod.GET)
     public String profil(Model model, HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(true);
-        int id = (int) session.getAttribute("currentSessionId");
-        ProfilDAO profilDAO = new ProfilDAO();
-        model.addAttribute("uporabnik", profilDAO.profilUporabnika(id));
-        return "Profil2";
+        if (session.getAttribute("currentSessionId") == null) {
+            return "redirect:/";
+        } else {
+            int id = (int) session.getAttribute("currentSessionId");
+            ProfilDAO profilDAO = new ProfilDAO();
+            model.addAttribute("uporabnik", profilDAO.profilUporabnika(id));
+            return "Profil2";
+        }
     }
 
     @RequestMapping(value = {"/UrediProfil" }, method = {RequestMethod.GET, RequestMethod.POST})

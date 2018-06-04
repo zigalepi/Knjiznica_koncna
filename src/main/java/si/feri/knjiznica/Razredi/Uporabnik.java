@@ -12,6 +12,7 @@ public class Uporabnik {
     private int tk_idNaslov;
     public boolean pravilno;
     private List<Knjiga> izposojeneKnjige = new ArrayList<>();
+    private List<Knjiga> mojeKnjige = new ArrayList<>();
     private Naslov naslov;
 
     public Uporabnik(int idUporabnik, String ime, String priimek, String upIme, String geslo, String email, int tk_idNaslov) {
@@ -28,10 +29,19 @@ public class Uporabnik {
 
     }
 
+    public List<Knjiga> getMojeKnjige() {
+        return mojeKnjige;
+    }
 
+    public void setMojeKnjige(List<Knjiga> mojeKnjige) {
+        this.mojeKnjige = mojeKnjige;
+    }
 
-    public void dodajKnjigo(Knjiga knjiga) {
+    public void dodajIzposojenoKnjigo(Knjiga knjiga) {
         izposojeneKnjige.add(knjiga);
+    }
+    public void dodajMojoKnjigo(Knjiga knjiga) {
+        mojeKnjige.add(knjiga);
     }
 
     public List<Knjiga> getIzposojeneKnjige() {

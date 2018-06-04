@@ -64,7 +64,7 @@ li a:hover {
 .active {
     background-color: #0053ff;
 }
-div.userData{
+.userData{
 
     border-radius: 10px;
     background-color: royalblue;
@@ -72,11 +72,11 @@ div.userData{
     padding:10px;
 
 }
-div.container{
+.container{
     margin: 10px 10px 10px 10px;
     width:100%;
 }
-div.container1{
+.container1{
     padding: 10px 10px 10px 10px;
     width:100%;
     margin-top:20px;
@@ -85,7 +85,7 @@ div.container1{
     border:3px solid;
     border-radius: 10px;
 }
-div.container2{
+.container2{
     border:3px solid black;
     border-radius:10px;
     font-size: 30px;
@@ -151,4 +151,8 @@ ul.seznamKnjig, .seznamKnjig li{
     border: 3px;
     border-color: black;
     background-color: cornflowerblue;
+}
+
+.navbar {
+    margin-top: 10px;
 }

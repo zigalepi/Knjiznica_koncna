@@ -24,7 +24,7 @@
 
                     <div class="col-sm-4">
                         <h1>
-                            MOJA KNJIŽNCA!
+                            MOJA KNJIŽNICA!
                         </h1>
                     </div>
                     <div class="col-sm-4"></div>
