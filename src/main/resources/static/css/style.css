@@ -130,6 +130,10 @@ table.tIzpis{
 }
 tr.tIzpis{
     border:1px solid black;
+    color:black;
+}
+a.tIzpis{
+    color:black;
 }
 th.tIzpis{
     border:2px solid black;
@@ -155,4 +159,8 @@ ul.seznamKnjig, .seznamKnjig li{
 
 .navbar {
     margin-top: 10px;
+}
+.tIzpis a{
+    display:block;
+    text-decoration: none;
 }

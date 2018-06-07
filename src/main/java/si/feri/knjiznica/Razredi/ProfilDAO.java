@@ -1,7 +1,10 @@
 package si.feri.knjiznica.Razredi;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ProfilDAO {
@@ -28,8 +31,12 @@ public class ProfilDAO {
 
         Uporabnik uporabnik = new Uporabnik();
 
-        while (resultSet.next()) {
+        java.util.Date date = new Date();
 
+        Date datumA;
+        while (resultSet.next()) {
+            datumA=new Date(resultSet.getDate("datumVrnitve").getTime());
+            if(datumA.after(date))
             uporabnik.dodajIzposojenoKnjigo(knjigar(resultSet));
 
         }
@@ -201,7 +208,7 @@ public class ProfilDAO {
                 resultSet.getInt("isbn"), resultSet.getString("zalozba"),
                 resultSet.getInt("letoIzdaje"), resultSet.getString("prevod"),
                 resultSet.getString("ilustracije"), resultSet.getString("zanr"),
-                resultSet.getString("publika"), resultSet.getString("lokacija"));
+                resultSet.getString("publika"), resultSet.getString("lokacija"),resultSet.getInt("navoljo"));
 
         return knjiga;
     }

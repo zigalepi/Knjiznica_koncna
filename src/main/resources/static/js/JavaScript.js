@@ -146,11 +146,11 @@ function odjava() {
 
 function prijav() {
     if(session=="null"  ) {
-        $("div.prijavljen").hide();
-        $("div.neprijavljen").show();
+        $(".prijavljen").hide();
+        $(".neprijavljen").show();
     }
     else {
-        $("div.neprijavljen").hide();
-        $("div.prijavljen").show();
+        $(".neprijavljen").hide();
+        $(".prijavljen").show();
     }
 }

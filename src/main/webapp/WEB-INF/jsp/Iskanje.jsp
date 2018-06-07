@@ -114,12 +114,12 @@
                                     <option  value ="avtor">Avtor</option>
                                     <option value="isbn">ISBN</option>
                                     <option value ="zalozba">Založba</option>
-                                    <option value="=leto">Leto Izdaje</option>
+                                    <option value="leto">Leto Izdaje</option>
                                     <option value="prevod">Prevod</option>
                                     <option value="ilustracije">Ilustracije</option>
                                     <option value="zanr">Žanr</option>
                                     <option value="publika">Ciljna publika</option>
-                                    <option value="prostor">Prostor</option>
+                                    <option value="lokacija">Lokacija</option>
                                 </select>
                             </div>
                         </div>
@@ -150,25 +150,27 @@
             <div class="tIzpis" style="width:100%">
 
                 <table class="tIzpis">
-                    <tr class="tiZpis">
+                    <tr class="tIzpis">
                         <th class="tIzpis">Naslov</th>
                         <th class="tIzpis">Avtor</th>
                         <th class="tIzpis">Založba</th>
                         <th class="tIzpis">Leto izdaje</th>
                         <th class="tIzpis">Žanr</th>
-                        <th class="tIzpis">Seznam želja</th>
-                        <th class="tIzpis">Izposoja</th>
+                        <th class="tIzpis prijavljen">Seznam želja</th>
+                        <th class="tIzpis prijavljen">Izposoja</th>
                     </tr>
                     <c:forEach items="${nekaj}" var="knjiga" varStatus="loop">
+
                         <tr class="tIzpis" id="${knjiga.idKnjiga}">
-                            <td class="tIzpis">${knjiga.naslov}</td>
+                            <td class="tIzpis"><a class="tIzpis" href="komentarji?id=${knjiga.idKnjiga}">${knjiga.naslov}</a></td>
                             <td class="tIzpis">${knjiga.avtor}</td>
                             <td class="tIzpis">${knjiga.zalozba}</td>
                             <td class="tIzpis">${knjiga.letoIzdaje}</td>
                             <td class="tIzpis">${knjiga.zanr}</td>
-                            <td class="tIzpis"><a href="seznamZelja?id=${knjiga.idKnjiga}">&#9770</a></td>
-                            <td class="tIzpis"><a href="seznamZelja?id=${knjiga.idKnjiga}">&#9870</a></td>
+                            <td class="tIzpis prijavljen"><a href="seznamZelja?id=${knjiga.idKnjiga}">&#9770</a></td>
+                            <td class="tIzpis prijavljen"><a href="vkosarico?id=${knjiga.idKnjiga}">&#9870</a></td>
                         </tr>
+
                     </c:forEach>
                 </table>
 

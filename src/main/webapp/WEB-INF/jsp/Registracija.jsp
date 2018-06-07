@@ -70,7 +70,7 @@
     <div class="prijavljen">
         <div class="nav">
             <ul>
-                <li">
+                <li>
                     <a href="index">Domov</a>
                 </li>
                 <li>

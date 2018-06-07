@@ -12,8 +12,9 @@ public class Knjiga {
      private String lokacija;
      private String zanr;
      private String publika;
+     private int navoljo;
 
-    public Knjiga(int idKnjiga,String naslov, String avtor, int isbn, String zalozba, int letoIzdaje, String prevod, String ilustracije, String lokacija, String zanr, String publika) {
+    public Knjiga(int idKnjiga,String naslov, String avtor, int isbn, String zalozba, int letoIzdaje, String prevod, String ilustracije, String lokacija, String zanr, String publika,int navoljo) {
         this.idKnjiga=idKnjiga;
         this.naslov = naslov;
         this.avtor = avtor;
@@ -25,6 +26,7 @@ public class Knjiga {
         this.lokacija = lokacija;
         this.zanr = zanr;
         this.publika = publika;
+        this.navoljo=navoljo;
     }
 
     public String getNaslov() {

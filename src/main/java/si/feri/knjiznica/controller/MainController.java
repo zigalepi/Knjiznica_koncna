@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import si.feri.knjiznica.Razredi.*;
-
+import si.feri.knjiznica.Razredi.Komentar;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +29,20 @@ public class MainController {
     public List<Knjiga> rezultat = new ArrayList<>();
     public List<Knjiga> izposojaList=new ArrayList<>();
     public List<Knjiga> kosarica=new ArrayList<>();
-
+    public List<Knjiga> zelje=new ArrayList<>();
+    public List<Komentar> komentarji=new ArrayList<>();
+    public int idKnjiga;
+    public String naslov;
+    public String avtor;
+    public int isbn;
+    public String zalozba;
+    public int letoIzdaje;
+    public String prevod;
+    public String ilustracije;
+    public String lokacija;
+    public String zanr;
+    public String publika;
+    public Knjiga k;
 
 
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
@@ -44,7 +60,7 @@ public class MainController {
     @RequestMapping(value = {"/iskanje"}, method = RequestMethod.GET)
     public String iskanje(Model model) {
         model.addAttribute("message", this.message);
-        return "iskanjeMetoda";
+        return "Iskanje";
     }
 
 
@@ -52,6 +68,14 @@ public class MainController {
     public String reg(Model model) {
         model.addAttribute("message", this.message);
         return "Registracija";
+    }
+
+    @RequestMapping(value = {"/kosarica"}, method = RequestMethod.GET)
+    public String kosarica(Model model) {
+        model.addAttribute("message", this.message);
+
+        model.addAttribute("kosarica",kosarica);
+        return "Kosarica";
     }
 
 
@@ -263,7 +287,7 @@ public class MainController {
 
 
 
-        String sql2 = "INSERT INTO naslov ( ulica, hisnaSt,tk_idKraj) VALUES (?,?,?)";
+        String sql2 = "INSERT INTO naslov (ulica, hisnaSt,tk_idKraj) VALUES (?,?,?)";
         PreparedStatement statement2 = conn2.prepareStatement(sql2);
 
         statement2.setString(1, naslov1);
@@ -347,7 +371,7 @@ public class MainController {
 
         // iterate through the java resultset
         while (rs.next()) {
-            knjigaList.add(new Knjiga(rs.getInt("idKnjiga"), rs.getString("naslov"), rs.getString("avtor"), rs.getInt("isbn"), rs.getString("zalozba"), rs.getInt("letoIzdaje"), rs.getString("prevod"), rs.getString("ilustracije"), rs.getString("lokacija"), rs.getString("zanr"), rs.getString("publika")));
+            knjigaList.add(new Knjiga(rs.getInt("idKnjiga"), rs.getString("naslov"), rs.getString("avtor"), rs.getInt("isbn"), rs.getString("zalozba"), rs.getInt("letoIzdaje"), rs.getString("prevod"), rs.getString("ilustracije"), rs.getString("lokacija"), rs.getString("zanr"), rs.getString("publika"),rs.getInt("navoljo")));
         }
 
 
@@ -369,7 +393,7 @@ public class MainController {
                     prvo = k.getZalozba();
                     break;
 
-                case "leto izdaje":
+                case "leto":
                     prvo = k.getLetoIzdaje() + "";
                     break;
                 case "prevod":
@@ -381,7 +405,7 @@ public class MainController {
                 case "zanr":
                     prvo = k.getZanr();
                     break;
-                case "ciljna publika":
+                case "publika":
                     prvo = k.getPublika();
                     break;
                 case "lokacija":
@@ -402,7 +426,7 @@ public class MainController {
         }
 
         model.addAttribute("nekaj", rezultat);
-        return "Iskanjes";
+        return "Iskanje";
 
     }
 
@@ -482,8 +506,8 @@ public class MainController {
 
     }
 
-    @RequestMapping(value = {"kosarica"}, method = RequestMethod.GET)
-    public String kosarica(Model model, @RequestParam(value = "id", required = false) int idK) throws SQLException {
+    @RequestMapping(value = {"vkosarico"}, method = RequestMethod.GET)
+    public String vkosarico(Model model, @RequestParam(value = "id", required = false) int idK) throws SQLException {
         model.addAttribute("message", this.message);
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -499,12 +523,171 @@ public class MainController {
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(sql);
         while (rs.next()) {
-            kosarica.add(new Knjiga(rs.getInt("idKnjiga"), rs.getString("naslov"), rs.getString("avtor"), rs.getInt("isbn"), rs.getString("zalozba"), rs.getInt("letoIzdaje"), rs.getString("prevod"), rs.getString("ilustracije"), rs.getString("lokacija"), rs.getString("zanr"), rs.getString("publika")));
+            kosarica.add(new Knjiga(rs.getInt("idKnjiga"), rs.getString("naslov"), rs.getString("avtor"), rs.getInt("isbn"), rs.getString("zalozba"), rs.getInt("letoIzdaje"), rs.getString("prevod"), rs.getString("ilustracije"), rs.getString("lokacija"), rs.getString("zanr"), rs.getString("publika"),rs.getInt("navoljo")));
         }
-        System.out.println(kosarica);
 
+        request.setAttribute("kosarica", kosarica);
 
         return "Iskanje";
+    }
+
+    @RequestMapping(value = {"komentarji"}, method = RequestMethod.GET)
+    public String komentarji(Model model, @RequestParam(value = "id", required = false) int idK) throws SQLException {
+        model.addAttribute("message", this.message);
+
+        Connection conn = null;
+        conn = ConnectionManager.getConnection();
+
+        String sql = "SELECT * FROM Knjiga WHERE idKnjiga="+"'"+idK+"'";
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        rs.next();
+        k=new Knjiga(rs.getInt("idKnjiga"), rs.getString("naslov"), rs.getString("avtor"), rs.getInt("isbn"), rs.getString("zalozba"), rs.getInt("letoIzdaje"), rs.getString("prevod"), rs.getString("ilustracije"), rs.getString("lokacija"), rs.getString("zanr"), rs.getString("publika"),rs.getInt("navoljo"));
+
+        idKnjiga=k.getIdKnjiga();
+        model.addAttribute("id",idKnjiga);
+
+        naslov=k.getNaslov();
+        model.addAttribute("naslov",naslov);
+
+        avtor=k.getAvtor();
+        model.addAttribute("avtor",avtor);
+
+        isbn=k.getIsbn();
+        model.addAttribute("isbn",isbn);
+
+        zalozba=k.getZalozba();
+        model.addAttribute("zalozba",zalozba);
+
+        letoIzdaje=k.getLetoIzdaje();
+        model.addAttribute("letoIzdaje",letoIzdaje);
+
+        prevod=k.getPrevod();
+        model.addAttribute("prevod",prevod);
+
+        ilustracije=k.getIlustracije();
+        model.addAttribute("ilustracije",ilustracije);
+
+        lokacija=k.getLokacija();
+        model.addAttribute("lokacija",lokacija);
+
+        zanr=k.getZanr();
+        model.addAttribute("zanr",zanr);
+
+        publika=k.getPublika();
+        model.addAttribute("publika",publika);
+
+        komentarji=new ArrayList<>();
+        String sql2="SELECT * FROM komentar k,uporabnik u where k.tk_idUporabnik=u.idUporabnik AND tk_idKnjiga="+"'"+idK+"'";
+
+        Statement st1 = conn.createStatement();
+        ResultSet rs1 = st1.executeQuery(sql2);
+        while (rs1.next()) {
+            komentarji.add(new Komentar(rs1.getInt("idKomentar"),rs1.getString("vsebina"),rs1.getString("tipKomentarja"),rs1.getInt("tk_idKnjiga"),rs1.getInt("tk_idUporabnik"),rs1.getString("upIme")));
+        }
+        System.out.println("tvoja mama "+komentarji.toString());
+        System.out.print("upime::"+komentarji.get(0).upIme);
+        model.addAttribute("komentarji",komentarji);
+
+        return "knjiga";
+
+
+    }
+
+    @RequestMapping(value = {"profil"}, method = RequestMethod.GET)
+    public String izpisProfil(Model model) throws SQLException {
+        model.addAttribute("message", this.message);
+
+        zelje = new ArrayList<>();
+        HttpServletRequest request= ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(false);
+        int idU=(int)session.getAttribute("currentSessionId");
+        ProfilDAO profilDAO = new ProfilDAO();
+        model.addAttribute("uporabnik", profilDAO.profilUporabnika(idU));
+
+        Connection conn = null;
+        conn = ConnectionManager.getConnection();
+
+        String sql ="select k.*\n" +
+                "from zelje z, zelje_knjige zk, knjiga k\n" +
+                "where zk.tk_idZelje=z.idZelje AND k.idKnjiga=zk.tk_idKnjiga AND z.tk_idUporabnik="+"'"+idU+"'";
+
+
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(sql);
+        while (rs.next()) {
+            zelje.add(new Knjiga(rs.getInt("idKnjiga"), rs.getString("naslov"), rs.getString("avtor"), rs.getInt("isbn"), rs.getString("zalozba"), rs.getInt("letoIzdaje"), rs.getString("prevod"), rs.getString("ilustracije"), rs.getString("lokacija"), rs.getString("zanr"), rs.getString("publika"),rs.getInt("navoljo")));
+
+        }
+        model.addAttribute("nekaj2",zelje);
+
+
+
+        return "Profil2";
+
+
+    }
+
+    @RequestMapping(value={"/izposodi"},method=RequestMethod.GET)
+    public String izposodi(Model model)throws SQLException{
+        HttpServletRequest request= ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(false);
+        int idU=(int)session.getAttribute("currentSessionId");
+        int idK;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        long da = (new Date().getTime()) + (14 * 24 * 3600 * 1000) ;
+        Date dateV = new Date(da);
+        String datum=dateFormat.format(date);
+        String datumV=dateFormat.format(dateV);
+
+        Connection conn=ConnectionManager.getConnection();
+        String sql;
+        PreparedStatement statement;
+
+        System.out.print("kosarica:"+kosarica.size());
+        for(int i=0;i<kosarica.size();i++) {
+            idK=kosarica.get(i).getIdKnjiga();
+            System.out.print("loop:"+i+","+idK);
+            sql="INSERT INTO izposoja (datumeIzposoje,datumVrnitve,tk_idUporabnik,tk_idKnjiga ) VALUES ("+"'"+datum+"',"+"'"+datumV +"',"+"'"+idU+"',"+"'"+idK+"')";
+            statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
+
+        }
+
+        kosarica=new ArrayList<>();
+       return "Index";
+    }
+
+    @RequestMapping(value = {"izpisKom"}, method = RequestMethod.GET)
+    public String izpisKom(Model model, @RequestParam(value = "kom", required = false) String vsebina,@RequestParam(value = "check", required = false) String tip) throws SQLException {
+        model.addAttribute("message", this.message);
+        int idKnjiga=k.getIdKnjiga();
+
+        Connection conn =ConnectionManager.getConnection();
+        HttpServletRequest request= ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(false);
+        int idU=(int)session.getAttribute("currentSessionId");
+
+
+        String sql2 = "INSERT INTO komentar ( vsebina, tipKomentarja,tk_idKnjiga,tk_idUporabnik) VALUES (?,?,?,?)";
+        PreparedStatement statement2 = conn.prepareStatement(sql2);
+
+        statement2.setString(1, vsebina);
+        statement2.setString(2, tip);
+        statement2.setInt(3, idKnjiga);
+        statement2.setInt(4, idU);
+        int rowsInserted2 = statement2.executeUpdate();
+
+
+
+
+        System.out.println(vsebina+" "+tip+" "+idKnjiga+" "+idU);
+
+        return "knjiga";
+
     }
 }
 
