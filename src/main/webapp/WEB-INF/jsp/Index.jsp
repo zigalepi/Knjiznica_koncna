@@ -9,10 +9,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Moja Knjiznica</title>
     <script src="js/JavaScript.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Eater" rel="stylesheet">
     <script>
         var session = '<%= session.getAttribute("currentSessionUser") %>'
-
-        document.write(session);
     </script>
 </head>
 <body>
@@ -21,16 +20,18 @@
         <header style="background-color: cornflowerblue">
             <div class="nav" style="width:100%" >
                 <div class="row">
-                    <div class="col-sm-2">
-                        <img src="slike/logo.jpg" style="height:120px">
+                    <div class="col-sm-3">
+                        <img src="slike/logo.png" style="height:120px">
                     </div>
-
-                    <div class="col-sm-4">
-                        <h1>
-                            MOJA KNJIŽNCA!
+                    <div class="col-sm-6">
+                        <h1 class="glavaNapis">
+                            MOJA KNJIŽNICA!
                         </h1>
                     </div>
-                    <div class="col-sm-4"></div>
+
+                    <div class="col-sm-3">
+                        <img src="slike/logo.png" style="height:120px; float:right">
+                    </div>
                 </div>
             </div>
         </header>

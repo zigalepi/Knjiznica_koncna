@@ -12,8 +12,6 @@
     <script src="js/JavaScript.js"></script>
     <script>
         var session = '<%= session.getAttribute("currentSessionUser") %>'
-
-        document.write(session);
     </script>
 </head>
 <body>

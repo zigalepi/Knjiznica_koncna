@@ -13,7 +13,7 @@
     <script src="js/JavaScript.js"></script>
     <script>
         var session = '<%= session.getAttribute("currentSessionUser") %>'
-        document.write(session);
+
     </script>
 </head>
 
@@ -28,8 +28,8 @@
                     </div>
 
                     <div class="col-sm-4">
-                        <h1>
-                            MOJA KNJIŽNCA!
+                        <h1 class="glavaNapis">
+                            MOJA KNJIŽNICA!
                         </h1>
                     </div>
                     <div class="col-sm-4"></div>

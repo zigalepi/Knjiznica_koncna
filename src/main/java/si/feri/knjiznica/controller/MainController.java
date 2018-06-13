@@ -1,6 +1,8 @@
 package si.feri.knjiznica.controller;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import si.feri.knjiznica.Razredi.*;
 import si.feri.knjiznica.Razredi.Komentar;
 import java.util.Date;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
@@ -18,12 +25,20 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.mail.*;
 
 @Controller
 public class MainController {
 
-
-
+    @Autowired
+    private JavaMailSender sender;
     @Value("Moj JSP")
     private String message = "Hello World";
     public List<Knjiga> rezultat = new ArrayList<>();
@@ -635,7 +650,7 @@ public class MainController {
         HttpServletRequest request= ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
         int idU=(int)session.getAttribute("currentSessionId");
-        int idK;
+        int idK=0;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         long da = (new Date().getTime()) + (14 * 24 * 3600 * 1000) ;
@@ -654,6 +669,58 @@ public class MainController {
             sql="INSERT INTO izposoja (datumeIzposoje,datumVrnitve,tk_idUporabnik,tk_idKnjiga ) VALUES ("+"'"+datum+"',"+"'"+datumV +"',"+"'"+idU+"',"+"'"+idK+"')";
             statement = conn.prepareStatement(sql);
             statement.executeUpdate();
+
+        }
+
+        String sql2 ="select naslov\n" +
+                "from knjiga \n" +
+                "where idknjiga="+"'"+idK+"'";
+
+
+
+        Statement st1 = conn.createStatement();
+        ResultSet rs1 = st1.executeQuery(sql2);
+        rs1.next();
+        String naslov=rs1.getString("naslov");
+
+
+        String sql3 ="select datumVrnitve\n" +
+                "from izposoja \n" +
+                "where tk_idknjiga="+"'"+idK+"'";
+
+
+
+        Statement st3 = conn.createStatement();
+        ResultSet rs3 = st3.executeQuery(sql3);
+        rs3.next();
+        String dat=rs3.getString("datumVrnitve")+"";
+
+
+        String sql4 ="select email\n" +
+                "from uporabnik \n" +
+                "where idUporabnik="+"'"+idU+"'";
+
+
+
+        Statement st4 = conn.createStatement();
+        ResultSet rs4 = st4.executeQuery(sql4);
+        rs4.next();
+        String mail =rs4.getString("email");
+
+
+
+
+
+
+
+        String tekst="Spoštovani!\n"+ "Sporocamo vam da ste si izposodili knjigo: "+naslov+ ". Knjigo morate vrniti do: "+dat+"." +"\n Lepo pozdravljeni";
+
+        try {
+
+            sendEmail(tekst,mail);
+
+        }catch(Exception ex) {
+            System.out.println("napaka");
 
         }
 
@@ -687,6 +754,22 @@ public class MainController {
         System.out.println(vsebina+" "+tip+" "+idKnjiga+" "+idU);
 
         return "knjiga";
+
+    }
+
+    private void sendEmail(String tekst, String mail) throws Exception{
+
+        MimeMessage message = sender.createMimeMessage();
+
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        helper.setTo(mail);
+        helper.setText(tekst);
+
+        helper.setSubject("Izposoja knjige");
+
+
+
+        sender.send(message);
 
     }
 }

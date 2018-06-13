@@ -14,7 +14,9 @@ button {
     margin-top:5%;
 }
 body{
-    background-color: #e6ffff;
+    background-image: url("../slike/bg1.jpg");
+    background-size: 100%;
+
 }
 ul {
     list-style-type: none;
@@ -26,6 +28,7 @@ ul {
 
 li {
     float: left;
+    font-family: 'Eater', cursive;
 
 }
 
@@ -163,4 +166,8 @@ ul.seznamKnjig, .seznamKnjig li{
 .tIzpis a{
     display:block;
     text-decoration: none;
+}
+.glavaNapis {
+    font-family: 'Eater', cursive;
+    font-size: 90px;
 }

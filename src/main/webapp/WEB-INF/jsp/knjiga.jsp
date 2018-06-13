@@ -9,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="js/JavaScript.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Eater" rel="stylesheet">
     <title>Moja Knjiznica</title>
 
 </head>
@@ -23,8 +24,8 @@
                     </div>
 
                     <div class="col-sm-4">
-                        <h1>
-                            MOJA KNJIŽNCA!
+                        <h1 class="glavaNapis">
+                            MOJA KNJIŽNICA!
                         </h1>
                     </div>
                     <div class="col-sm-4"></div>
@@ -35,7 +36,7 @@
 
     <div class="nav">
         <ul>
-            <li>
+            <li style="font-family: 'Eater', cursive">
                 <a href="index">Domov</a>
             </li>
             <li>
@@ -202,7 +203,7 @@
                                     </label>
                                 </div>
 
-                                    <textarea name="kom" rows="5" cols="94" style = "border: solid 1px black" value="Vnesite željeno besedilo."></textarea>
+                                   <textarea name="kom" rows="5" cols="94" style = "border: solid 1px black" value="Vnesite željeno besedilo."></textarea>
                                     <br>
                                    <button onclick="izpisKom">
                                       Potrdi
