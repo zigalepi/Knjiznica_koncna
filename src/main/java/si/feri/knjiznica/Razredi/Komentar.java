@@ -10,6 +10,7 @@ public class Komentar {
 
 
 
+
     public Komentar(int idKomentar, String vsebina, String tipKomentarja, int tk_idKnjiga, int tk_idUporabnik, String upIme) {
         this.idKomentar = idKomentar;
         this.vsebina = vsebina;
@@ -17,6 +18,14 @@ public class Komentar {
         this.tk_idKnjiga = tk_idKnjiga;
         this.tk_idUporabnik=tk_idUporabnik;
         this.upIme=upIme;
+    }
+
+    public String getUpIme() {
+        return upIme;
+    }
+
+    public void setUpIme(String upIme) {
+        this.upIme = upIme;
     }
 
     public int getIdKomentar() {

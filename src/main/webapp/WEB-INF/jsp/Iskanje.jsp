@@ -83,7 +83,7 @@
                             <td class="tIzpis">${knjiga.letoIzdaje}</td>
                             <td class="tIzpis">${knjiga.zanr}</td>
                             <td class="tIzpis prijavljen"><a href="seznamZelja?id=${knjiga.idKnjiga}">&#9770</a></td>
-                            <td class="tIzpis prijavljen"><a href="vkosarico?id=${knjiga.idKnjiga}">&#9870</a></td>
+                            <c:if test="${knjiga.navoljo==1}"><td class="tIzpis prijavljen"><a href="vkosarico?id=${knjiga.idKnjiga}">&#9870</a></td></c:if>
                         </tr>
 
                     </c:forEach>
@@ -94,8 +94,6 @@
     </div>
 </div>
 </div>
-<script>
-    prijav();
-</script>
+
 </body>
 </html>

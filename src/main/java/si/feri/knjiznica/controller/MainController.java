@@ -58,6 +58,7 @@ public class MainController {
     public String zanr;
     public String publika;
     public Knjiga k;
+    public String napakaReg="Uporabniško ime že obstaja";
 
 
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
@@ -70,6 +71,7 @@ public class MainController {
     @RequestMapping(value = {"/dodajKnj"}, method = RequestMethod.GET)
     public String index2(Model model) {
         model.addAttribute("message", this.message);
+        model.addAttribute("izbira", 4);
         return "DodajKnj";
     }
 
@@ -93,6 +95,7 @@ public class MainController {
         model.addAttribute("message", this.message);
 
         model.addAttribute("kosarica",kosarica);
+        model.addAttribute("izbira", 6);
         return "Kosarica";
     }
 
@@ -123,7 +126,8 @@ public class MainController {
             String upo = u.getUpIme();
 
             if (upo.equals(upoIme)) {
-                model.addAttribute("napaka", nap);
+                model.addAttribute("napaka", napakaReg);
+                model.addAttribute("napA", "alert alert-warning");
                 pravilnoUp = false;
                 break;
 
@@ -260,6 +264,17 @@ public class MainController {
             }
 
             conn.close();
+            String zadeva="Registracija.";
+            String tekst="Spoštovani "+ime+"! \n"+"Uspešno ste se registrirali na spletno stran Moja Knjižnica. Vaše uporabniško ime je: "+upoIme+", vaše geslo pa "+geslo+". Prijetno uporabljenje aplikacije! \n"+"Ekipa Moje Knjižice. ";
+
+            try {
+
+                sendEmail(tekst,email,zadeva);
+
+            }catch(Exception ex) {
+                System.out.println("napaka");
+
+            }
             st6.close();
 
 
@@ -286,12 +301,14 @@ public class MainController {
             int id= rs.getInt("idUporabnik");
             session.setAttribute("currentSessionId", id);
             conn.close();
+            model.addAttribute("izbira", 1);
             return "redirect:/index";
 
 
         } else {
 
             System.out.println("Up ime že obstaja");
+            model.addAttribute("izbira", 3);
             return "Registracija";
         }
 
@@ -605,7 +622,7 @@ public class MainController {
             komentarji.add(new Komentar(rs1.getInt("idKomentar"),rs1.getString("vsebina"),rs1.getString("tipKomentarja"),rs1.getInt("tk_idKnjiga"),rs1.getInt("tk_idUporabnik"),rs1.getString("upIme")));
         }
         System.out.println("tvoja mama "+komentarji.toString());
-        System.out.print("upime::"+komentarji.get(0).upIme);
+
         model.addAttribute("komentarji",komentarji);
 
         return "knjiga";
@@ -715,12 +732,12 @@ public class MainController {
 
 
 
-
+    String zadeva="Izposoja knjige.";
         String tekst="Spoštovani!\n"+ "Sporocamo vam da ste si izposodili knjigo: "+naslov+ ". Knjigo morate vrniti do: "+dat+"." +"\n Lepo pozdravljeni";
 
         try {
 
-            sendEmail(tekst,mail);
+            sendEmail(tekst,mail,zadeva);
 
         }catch(Exception ex) {
             System.out.println("napaka");
@@ -760,7 +777,7 @@ public class MainController {
 
     }
 
-    private void sendEmail(String tekst, String mail) throws Exception{
+    private void sendEmail(String tekst, String mail,String zadeva) throws Exception{
 
         MimeMessage message = sender.createMimeMessage();
 
@@ -768,7 +785,7 @@ public class MainController {
         helper.setTo(mail);
         helper.setText(tekst);
 
-        helper.setSubject("Izposoja knjige");
+        helper.setSubject(zadeva);
 
 
 

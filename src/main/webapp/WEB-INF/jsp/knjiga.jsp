@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,25 +175,19 @@
                     <h3 class="reg">Pretekli komentarji</h3>
 
                 </div>
-                <div class="container1">
 
-                    <table class="tIzpis">
-                        <tr class="tiZpis">
-                            <th class="tIzpis">Uporabnik</th>
-                            <th class="tIzpis">Vsebina</th>
-                            <th class="tIzpis">Tip</th>
+                    <c:forEach items="${komentarji}" var="komentar" varStatus="loop">
+                        <div class="komentar">
+                            <div class="kIme">
+                                <span style="font-weight: bold;font-size:15px;margin-right:20px">${komentar.upIme}</span> <span style="color:grey;font-size:14px">${komentar.tipKomentarja}</>
+                            </div>
+                               <div class="kVsebina">
+                                       ${komentar.vsebina}
+                               </div>
 
-                        </tr>
-                        <c:forEach items="${komentarji}" var="komentar" varStatus="loop">
-                            <tr class="tIzpis" id="a">
-                                <td class="tIzpis">${komentar}</td>
-                                <td class="tIzpis">${komentar.vsebina}</td>
-                                <td class="tIzpis">${komentar.tipKomentarja}</td>
+                        </div>
+                    </c:forEach>
 
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div>
             </div>
         </div>
     </div>

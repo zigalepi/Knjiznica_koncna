@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,6 +92,9 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="text" name="rUporabnisko">
+                                    <div class="${napA}">
+                                        ${napaka}
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -125,8 +130,6 @@
     </div>
 </div>
 
-<script>
-    prijav();
-</script>
+
 </body>
 </html>

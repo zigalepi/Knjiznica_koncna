@@ -14,7 +14,9 @@ public class Knjiga {
      private String publika;
      private int navoljo;
 
-    public Knjiga(int idKnjiga,String naslov, String avtor, int isbn, String zalozba, int letoIzdaje, String prevod, String ilustracije, String lokacija, String zanr, String publika,int navoljo) {
+
+
+    public Knjiga(int idKnjiga, String naslov, String avtor, int isbn, String zalozba, int letoIzdaje, String prevod, String ilustracije, String lokacija, String zanr, String publika, int navoljo) {
         this.idKnjiga=idKnjiga;
         this.naslov = naslov;
         this.avtor = avtor;
@@ -27,6 +29,14 @@ public class Knjiga {
         this.zanr = zanr;
         this.publika = publika;
         this.navoljo=navoljo;
+    }
+
+    public int getNavoljo() {
+        return navoljo;
+    }
+
+    public void setNavoljo(int navoljo) {
+        this.navoljo = navoljo;
     }
 
     public String getNaslov() {
@@ -131,6 +141,7 @@ public class Knjiga {
                 ", lokacija='" + lokacija + '\'' +
                 ", zanr='" + zanr + '\'' +
                 ", publika='" + publika + '\'' +
+                ", navoljo='" + navoljo + '\'' +
                 '}';
     }
 }

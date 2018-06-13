@@ -76,17 +76,13 @@
                         <tr class="tIzpis">
                             <th class="tIzpis">Naslov</th>
                             <th class="tIzpis">Avtor</th>
-                            <th class="tIzpis">Založba</th>
-                            <th class="tIzpis">Leto izdaje</th>
-                            <th class="tIzpis">Žanr</th>
+
                         </tr>
                         <c:forEach items="${kosarica}" var="knjiga" varStatus="loop">
                             <tr class="tIzpis">
                                 <td class="tIzpis"><a class="tIzpis" href="komentarji?id=${knjiga.idKnjiga}">${knjiga.naslov}</a></td>
                                 <td class="tIzpis">${knjiga.avtor}</td>
-                                <td class="tIzpis">${knjiga.zalozba}</td>
-                                <td class="tIzpis">${knjiga.letoIzdaje}</td>
-                                <td class="tIzpis">${knjiga.zanr}</td>
+                                <td ><a class="tIzpis" href="izkosarice?id=${knjiga.idKnjiga}">&#10060</a></td>
                             </tr>
                         </c:forEach>
                     </table>

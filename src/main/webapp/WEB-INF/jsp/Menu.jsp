@@ -1,16 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="glava">
-    <header style="background-color: cornflowerblue">
+    <header style="background-color: #999999">
         <div class="nav" style="width:100%" >
             <div class="row">
                 <div class="col-sm-3">
                     <img src="slike/logo.png" style="height:120px">
                 </div>
                 <div class="col-sm-6">
-                    <h1 class="glavaNapis">
+                    <div class="glavaNapis">
                         MOJA KNJIŽNICA!
-                    </h1>
+                    </div>
                 </div>
 
                 <div class="col-sm-3">
@@ -53,22 +53,22 @@
 <div class="prijavljen">
     <div class="nav">
         <ul>
-            <li class="active">
+            <li class="<c:if test="${izbira==1}">active</c:if>">
                 <a href="index">Domov</a>
             </li>
-            <li>
+            <li class="<c:if test="${izbira==2}">active</c:if>">
                 <a href="iskanje">Iskanje knjig</a>
             </li>
-            <li>
+            <li class="<c:if test="${izbira==4}">active</c:if>">
                 <a href="dodajKnj">Dodaj Knjigo</a>
             </li>
-            <li>
+            <li class="<c:if test="${izbira==5}">active</c:if>">
                 <a href="profil">Profil</a>
             </li>
-            <li>
+            <li class="<c:if test="${izbira==6}">active</c:if>">
                 <a href="kosarica">Košarica</a>
             </li>
-            <li style="float:right">
+            <li class="active" style="float:right">
                 <a href="logout">Odjava</a>
             </li>
             <li style="float:right">

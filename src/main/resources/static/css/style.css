@@ -28,7 +28,7 @@ ul {
 
 li {
     float: left;
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Song Myung', serif;
 
 }
 
@@ -130,10 +130,12 @@ table.tIzpis{
     padding:10px;
     margin:0 auto;
     width:100%;
+    background-color: royalblue;
 }
 tr.tIzpis{
     border:1px solid black;
     color:black;
+    margin:15px 15px 15px 15px;
 }
 a.tIzpis{
     color:black;
@@ -147,6 +149,8 @@ td.tIzpis{
     border: 1px solid black;
     width: 20%;
     padding:5px 5px 5px 0;
+}
+td.tIzpis{
 }
 ul.seznamKnjig, .seznamKnjig li{
     background-color: white;
@@ -170,4 +174,16 @@ ul.seznamKnjig, .seznamKnjig li{
 .glavaNapis {
     font-family: 'Eater', cursive;
     font-size: 90px;
+    text-align:center;
+}
+.komentar{
+    margin-top:20px;
+}
+.kVsebina{
+    padding: 10px 10px 10px 10px;
+    width:100%;
+
+    background-color:cornflowerblue;
+
+    border-radius: 10px;;
 }
