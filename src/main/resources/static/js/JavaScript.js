@@ -145,6 +145,7 @@ function odjava() {
 }
 
 function prijav() {
+
     if(session=="null"  ) {
         $(".prijavljen").hide();
         $(".neprijavljen").show();

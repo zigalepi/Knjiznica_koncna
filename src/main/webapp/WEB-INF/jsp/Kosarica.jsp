@@ -1,67 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <%@ page contentType="text/html; charset=UTF-8" %>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Moja Knjiznica</title>
-    <script src="js/JavaScript.js"></script>
+    <%@include file="Links.jsp"%>
 </head>
-<body>
-<script>
-    var session = '<%= session.getAttribute("currentSessionUser") %>'
-</script>
+<body  onload="prijav()">
 <div id="wrapper">
-    <div class="glava">
-        <header style="background-color: cornflowerblue">
-            <div class="nav" style="width:100%" >
-                <div class="row">
-                    <div class="col-sm-2">
-                        <img src="slike/logo.jpg" style="height:120px">
-                    </div>
-
-                    <div class="col-sm-4">
-                        <h1>
-                            MOJA KNJIŽNCA!
-                        </h1>
-                    </div>
-                    <div class="col-sm-4"></div>
-                </div>
-            </div>
-        </header>
-    </div>
-
-    <div class="prijavljen">
-        <div class="nav">
-            <ul>
-                <li>
-                    <a href="index">Domov</a>
-                </li>
-                <li>
-                    <a href="iskanje">Iskanje knjig</a>
-                </li>
-                <li class="active">
-                    <a href="dodajKnj">Dodaj Knjigo</a>
-                </li>
-                <li>
-                    <a href="profil">Profil</a>
-                </li>
-                <li style="float:right">
-                    <a href="logout">Odjava</a>
-                </li>
-                <li style="float:right">
-                    <div class="prijavljen">
-                        <p>Pozdravljen, <%= session.getAttribute( "currentSessionUserName" ) %></p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-
+    <%@include file="Menu.jsp"%>
     <br>
     <div class="container" style="width:100%">
         <div class="row" style="width:100%">
@@ -82,7 +28,7 @@
                             <tr class="tIzpis">
                                 <td class="tIzpis"><a class="tIzpis" href="komentarji?id=${knjiga.idKnjiga}">${knjiga.naslov}</a></td>
                                 <td class="tIzpis">${knjiga.avtor}</td>
-                                <td ><a class="tIzpis" href="izkosarice?id=${knjiga.idKnjiga}">&#10060</a></td>
+                                <td class="tIzpis "><a href="izbrisiKos?id=${knjiga.idKnjiga}">&#10060</a></td>
                             </tr>
                         </c:forEach>
                     </table>

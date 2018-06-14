@@ -6,5 +6,5 @@
 <script src="js/JavaScript.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Eater|Song+Myung" rel="stylesheet">
 <script>
-    var session = '<%= session.getAttribute("currentSessionUser") %>'
+    var session = '<%= session.getAttribute("currentSessionId") %>'
 </script>

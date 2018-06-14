@@ -119,4 +119,21 @@ public class Uporabnik {
     public boolean getPravilno(){return pravilno; }
 
     public void setPravilno(boolean p){this.pravilno=p;}
+
+    @Override
+    public String toString() {
+        return "Uporabnik{" +
+                "idUporabnik=" + idUporabnik +
+                ", ime='" + ime + '\'' +
+                ", priimek='" + priimek + '\'' +
+                ", upIme='" + upIme + '\'' +
+                ", geslo='" + geslo + '\'' +
+                ", email='" + email + '\'' +
+                ", tk_idNaslov=" + tk_idNaslov +
+                ", pravilno=" + pravilno +
+                ", izposojeneKnjige=" + izposojeneKnjige +
+                ", mojeKnjige=" + mojeKnjige +
+                ", naslov=" + naslov +
+                '}';
+    }
 }

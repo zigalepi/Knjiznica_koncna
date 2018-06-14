@@ -179,7 +179,7 @@
                     <c:forEach items="${komentarji}" var="komentar" varStatus="loop">
                         <div class="komentar">
                             <div class="kIme">
-                                <span style="font-weight: bold;font-size:15px;margin-right:20px">${komentar.upIme}</span> <span style="color:grey;font-size:14px">${komentar.tipKomentarja}</>
+                                <span style="font-weight: bold;font-size:15px;margin-right:15px;color:white">${komentar.upIme}</span> <span style="color:grey;font-size:14px">Tip: ${komentar.tipKomentarja}</>
                             </div>
                                <div class="kVsebina">
                                        ${komentar.vsebina}

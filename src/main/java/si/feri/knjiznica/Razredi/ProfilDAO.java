@@ -35,6 +35,9 @@ public class ProfilDAO {
 
         Date datumA;
         while (resultSet.next()) {
+            uporabnik.setIme(resultSet.getString("ime"));
+            uporabnik.setPriimek(resultSet.getString("priimek"));
+            uporabnik.setEmail(resultSet.getString("email"));
             datumA=new Date(resultSet.getDate("datumVrnitve").getTime());
             if(datumA.after(date))
             uporabnik.dodajIzposojenoKnjigo(knjigar(resultSet));
@@ -209,6 +212,28 @@ public class ProfilDAO {
                 resultSet.getInt("letoIzdaje"), resultSet.getString("prevod"),
                 resultSet.getString("ilustracije"), resultSet.getString("zanr"),
                 resultSet.getString("publika"), resultSet.getString("lokacija"),resultSet.getInt("navoljo"));
+
+        return knjiga;
+    }
+
+    public Knjiga knjiga(int id) throws SQLException {
+
+        Connection connection = ConnectionManager.getConnection();
+
+
+        String sql = "SELECT * FROM knjiga k WHERE idKnjiga = " + id;
+
+
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        Knjiga knjiga = null;
+        while (resultSet.next()) {
+
+            knjiga= knjigar(resultSet);
+
+        }
 
         return knjiga;
     }

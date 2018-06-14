@@ -136,6 +136,14 @@
                                     <input type="text" name="kLokacija">
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <p>Uvozi XML</p>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a href="UvoziXml">Tukaj!</a>
+                                </div>
+                            </div>
 
                         </div>
 

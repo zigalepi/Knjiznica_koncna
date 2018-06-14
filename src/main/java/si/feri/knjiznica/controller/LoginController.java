@@ -57,6 +57,7 @@ public class LoginController {
                 int id= rs.getInt("idUporabnik");
                 session.setAttribute("currentSessionId", id);
                 conn.close();
+                System.out.print("Uporabnik: "+user+" "+id);
 
                 return "redirect:/index";
             } else

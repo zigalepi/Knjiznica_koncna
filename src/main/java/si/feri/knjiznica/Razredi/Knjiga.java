@@ -1,5 +1,9 @@
 package si.feri.knjiznica.Razredi;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Knjiga {
     private int idKnjiga;
     private String naslov;
@@ -14,7 +18,7 @@ public class Knjiga {
      private String publika;
      private int navoljo;
 
-
+    public Knjiga(){}
 
     public Knjiga(int idKnjiga, String naslov, String avtor, int isbn, String zalozba, int letoIzdaje, String prevod, String ilustracije, String lokacija, String zanr, String publika, int navoljo) {
         this.idKnjiga=idKnjiga;
@@ -35,6 +39,7 @@ public class Knjiga {
         return navoljo;
     }
 
+    @XmlElement
     public void setNavoljo(int navoljo) {
         this.navoljo = navoljo;
     }
@@ -43,6 +48,7 @@ public class Knjiga {
         return naslov;
     }
 
+    @XmlElement
     public void setNaslov(String naslov) {
         this.naslov = naslov;
     }
@@ -51,6 +57,7 @@ public class Knjiga {
         return avtor;
     }
 
+    @XmlElement
     public void setAvtor(String avtor) {
         this.avtor = avtor;
     }
@@ -59,6 +66,7 @@ public class Knjiga {
         return isbn;
     }
 
+    @XmlElement
     public void setIsbn(int isbn) {
         this.isbn = isbn;
     }
@@ -67,6 +75,7 @@ public class Knjiga {
         return zalozba;
     }
 
+    @XmlElement
     public void setZalozba(String zalozba) {
         this.zalozba = zalozba;
     }
@@ -75,6 +84,7 @@ public class Knjiga {
         return letoIzdaje;
     }
 
+    @XmlElement
     public void setLetoIzdaje(int letoIzdaje) {
         this.letoIzdaje = letoIzdaje;
     }
@@ -83,6 +93,7 @@ public class Knjiga {
         return prevod;
     }
 
+    @XmlElement
     public void setPrevod(String prevod) {
         this.prevod = prevod;
     }
@@ -91,6 +102,7 @@ public class Knjiga {
         return ilustracije;
     }
 
+    @XmlElement
     public void setIlustracije(String ilustracije) {
         this.ilustracije = ilustracije;
     }
@@ -99,6 +111,7 @@ public class Knjiga {
         return lokacija;
     }
 
+    @XmlElement
     public void setLokacija(String lokacija) {
         this.lokacija = lokacija;
     }
@@ -107,6 +120,7 @@ public class Knjiga {
         return zanr;
     }
 
+    @XmlElement
     public void setZanr(String zanr) {
         this.zanr = zanr;
     }
@@ -115,6 +129,7 @@ public class Knjiga {
         return publika;
     }
 
+    @XmlElement
     public void setPublika(String publika) {
         this.publika = publika;
     }
@@ -123,6 +138,7 @@ public class Knjiga {
         return idKnjiga;
     }
 
+    @XmlElement
     public void setIdKnjiga(int idKnjiga) {
         this.idKnjiga = idKnjiga;
     }

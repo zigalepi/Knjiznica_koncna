@@ -18,24 +18,23 @@
         <div class="col-sm-6">
             <div class="userData">
                 <div class="container2">
-                    <h3>${uporabnik.ime} ${uporabnik.priimek}</h3>
                     <p>Moj profil</p>
+                </div>
+
+                <div class="container1">
+                    <h3>Podatki</h3>
+
+                    <p>Ime: ${uporabnik.ime}</p>
+                    <p>Priimek: ${uporabnik.priimek}</p>
+                    <p>Email: ${uporabnik.email}</p>
 
                 </div>
 
-                <nav class="navbar navbar-inverse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="profil">Moj profil</a></li>
-                        <li><a href="UrediProfil">Uredi profil</a></li>
-                    </ul>
-                    <p class="navbar-text">Ti pa si pravi knjižni molj!</p>
-                </nav>
-                <!-- ------------------------------------- -->
                 <div class="container1">
                 <h3>Izposojene knjige</h3>
                 <ul class="seznamKnjig">
                     <c:forEach items="${uporabnik.izposojeneKnjige}" var="knjiga">
-                        <li><b>${knjiga.avtor}</b>: ${knjiga.naslov}</li>
+                        <li><b>${knjiga.avtor}</b>: ${knjiga.naslov} <a id="izbrisi" href="vrni?id=${knjiga.idKnjiga}">Vrni Knjigo</a></li>
                     </c:forEach>
                 </ul>
                 </div>

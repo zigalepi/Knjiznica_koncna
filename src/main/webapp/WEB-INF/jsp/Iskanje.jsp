@@ -31,10 +31,7 @@
                                     <option value ="zalozba">Založba</option>
                                     <option value="leto">Leto Izdaje</option>
                                     <option value="prevod">Prevod</option>
-                                    <option value="ilustracije">Ilustracije</option>
-                                    <option value="zanr">Žanr</option>
                                     <option value="publika">Ciljna publika</option>
-                                    <option value="lokacija">Lokacija</option>
                                 </select>
                             </div>
                         </div>
@@ -72,7 +69,9 @@
                         <th class="tIzpis">Leto izdaje</th>
                         <th class="tIzpis">Žanr</th>
                         <th class="tIzpis prijavljen">Seznam želja</th>
+                        <th class="tIzpis prijavljen">Izvozi XML</th>
                         <th class="tIzpis prijavljen">Izposoja</th>
+
                     </tr>
                     <c:forEach items="${nekaj}" var="knjiga" varStatus="loop">
 
@@ -83,7 +82,9 @@
                             <td class="tIzpis">${knjiga.letoIzdaje}</td>
                             <td class="tIzpis">${knjiga.zanr}</td>
                             <td class="tIzpis prijavljen"><a href="seznamZelja?id=${knjiga.idKnjiga}">&#9770</a></td>
+                            <td class="tIzpis prijavljen"><a href="izvoziXml?id=${knjiga.idKnjiga}">📚</a></td>
                             <c:if test="${knjiga.navoljo==1}"><td class="tIzpis prijavljen"><a href="vkosarico?id=${knjiga.idKnjiga}">&#9870</a></td></c:if>
+
                         </tr>
 
                     </c:forEach>

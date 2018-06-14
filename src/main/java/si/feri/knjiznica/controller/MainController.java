@@ -8,10 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import si.feri.knjiznica.Razredi.*;
 import si.feri.knjiznica.Razredi.Komentar;
+
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Date;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -19,6 +23,7 @@ import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.text.DateFormat;
@@ -33,6 +38,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.mail.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 @Controller
 public class MainController {
@@ -59,6 +68,7 @@ public class MainController {
     public String publika;
     public Knjiga k;
     public String napakaReg="Uporabniško ime že obstaja";
+    public Uporabnik upo;
 
 
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
@@ -386,10 +396,11 @@ public class MainController {
     }
 
 
-    @RequestMapping(value = {"iskanjeMetoda"}, method = {RequestMethod.POST, RequestMethod.GET})
-    public String iskanje(Model model, @RequestParam(value = "izbira1", required = false) String izbira1, @RequestParam(value = "iskanje1", required = false) String iskanje) throws SQLException {
+    @RequestMapping(value = {"/iskanjeMetoda"}, method = {RequestMethod.GET, RequestMethod.POST })
+    public String iskanjeMetoda(Model model, @RequestParam(value = "izbira1", required = false) String izbira1, @RequestParam(value = "iskanje1", required = false) String iskanje) throws SQLException {
         model.addAttribute("message", this.message);
-
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session = request.getSession(false);
 
         Connection conn = ConnectionManager.getConnection();
         int c = 0;
@@ -479,7 +490,7 @@ public class MainController {
         return "DodajKnj";
     }
 
-    public String knjiga(String naslov, String avtorIme, String avtorPriimek, int isbn, String zalozba, int letoIzdaje, String prevod, String ilustracije, String zanr, String publika, String lokacija, int tk_idUporabnik) throws SQLException {
+    public int knjiga(String naslov, String avtorIme, String avtorPriimek, int isbn, String zalozba, int letoIzdaje, String prevod, String ilustracije, String zanr, String publika, String lokacija, int tk_idUporabnik) throws SQLException {
         Connection conn = null;
 
         conn = ConnectionManager.getConnection();
@@ -487,7 +498,7 @@ public class MainController {
         String avtor = avtorIme.toLowerCase() + " " + avtorPriimek.toLowerCase();
 
         String sql1 = "INSERT INTO Knjiga ( naslov,avtor, isbn, zalozba, letoIzdaje,prevod,ilustracije,zanr,publika,lokacija,tk_idUporabnik) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-        PreparedStatement statement1 = conn.prepareStatement(sql1);
+        PreparedStatement statement1 = conn.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
         statement1.setString(1, naslov);
         statement1.setString(2, avtor);
         statement1.setInt(3, isbn);
@@ -500,11 +511,16 @@ public class MainController {
         statement1.setString(10, lokacija);
         statement1.setInt(11, tk_idUporabnik);
         int rowsInserted1 = statement1.executeUpdate();
+        ResultSet rs = statement1.getGeneratedKeys();
+        int risultato = 0;
+        if(rs.next()){
+            risultato = rs.getInt(1);
+        }
         if (rowsInserted1 > 0) {
             System.out.println("Uspesno kraj");
 
         }
-        return "DodajKnj";
+        return risultato;
     }
     @RequestMapping(value = {"seznamZelja"}, method = RequestMethod.GET)
     public String seznamZelja(Model model, @RequestParam(value = "id", required = false) int idK) throws SQLException {
@@ -544,7 +560,7 @@ public class MainController {
     @RequestMapping(value = {"vkosarico"}, method = RequestMethod.GET)
     public String vkosarico(Model model, @RequestParam(value = "id", required = false) int idK) throws SQLException {
         model.addAttribute("message", this.message);
-
+        int a=0;
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
         int idTest = (int) session.getAttribute("currentSessionId");
@@ -558,10 +574,24 @@ public class MainController {
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(sql);
         while (rs.next()) {
-            kosarica.add(new Knjiga(rs.getInt("idKnjiga"), rs.getString("naslov"), rs.getString("avtor"), rs.getInt("isbn"), rs.getString("zalozba"), rs.getInt("letoIzdaje"), rs.getString("prevod"), rs.getString("ilustracije"), rs.getString("lokacija"), rs.getString("zanr"), rs.getString("publika"),rs.getInt("navoljo")));
+            for(Knjiga knj:kosarica) {
+                if (rs.getInt("isbn") == knj.getIsbn()) {
+                    a = 1;
+
+
+                }
+            }
+            if(a==0) {
+                kosarica.add(new Knjiga(rs.getInt("idKnjiga"), rs.getString("naslov"), rs.getString("avtor"), rs.getInt("isbn"), rs.getString("zalozba"), rs.getInt("letoIzdaje"), rs.getString("prevod"), rs.getString("ilustracije"), rs.getString("lokacija"), rs.getString("zanr"), rs.getString("publika"), rs.getInt("navoljo")));
+            }
+
+            else
+                System.out.println("Že obstaja");
+
+
         }
 
-        request.setAttribute("kosarica", kosarica);
+       session.setAttribute("kosarica", kosarica);
 
         return "Iskanje";
     }
@@ -633,7 +663,7 @@ public class MainController {
     @RequestMapping(value = {"profil"}, method = RequestMethod.GET)
     public String izpisProfil(Model model) throws SQLException {
         model.addAttribute("message", this.message);
-
+        upo=new Uporabnik();
         zelje = new ArrayList<>();
         HttpServletRequest request= ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
@@ -641,15 +671,13 @@ public class MainController {
         ProfilDAO profilDAO = new ProfilDAO();
         model.addAttribute("uporabnik", profilDAO.profilUporabnika(idU));
 
+
         Connection conn = null;
         conn = ConnectionManager.getConnection();
 
         String sql ="select k.*\n" +
                 "from zelje z, zelje_knjige zk, knjiga k\n" +
                 "where zk.tk_idZelje=z.idZelje AND k.idKnjiga=zk.tk_idKnjiga AND z.tk_idUporabnik="+"'"+idU+"'";
-
-
-
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(sql);
         while (rs.next()) {
@@ -657,6 +685,7 @@ public class MainController {
 
         }
         model.addAttribute("nekaj2",zelje);
+
 
 
 
@@ -727,8 +756,13 @@ public class MainController {
         rs4.next();
         String mail =rs4.getString("email");
 
-
-
+        for(Knjiga knj:kosarica) {
+            String sql5 = "UPDATE knjiga SET navoljo = ? WHERE idKnjiga = ?";
+            PreparedStatement statement5 = conn.prepareStatement(sql5);
+            statement5.setInt(1, 0);  //o izposojeno
+            statement5.setInt(2, knj.getIdKnjiga());
+            int rowsUpdated = statement5.executeUpdate();
+        }
 
 
 
@@ -791,6 +825,93 @@ public class MainController {
 
         sender.send(message);
 
+    }
+    @ResponseBody
+    @RequestMapping(value = {"izvoziXml"}, method = {RequestMethod.POST, RequestMethod.GET})
+    public String iskanje(Model model, @RequestParam(value = "id", required = true) int id, HttpServletResponse response) throws SQLException, JAXBException {
+
+        Knjiga knjiga = new ProfilDAO().knjiga(id);
+
+        response.setContentType("application/xml; charset=utf-8");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + knjiga.getNaslov() + ".xml\"");
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(Knjiga.class);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        StringWriter sw = new StringWriter();
+        jaxbMarshaller.marshal(knjiga, sw);
+        String xmlString = sw.toString();
+
+        return xmlString;
+    }
+
+    @RequestMapping(value = {"/UvoziXml"}, method = RequestMethod.GET)
+    public String uvoziXml(Model model) {
+
+        return "UvoziXml";
+    }
+
+    @RequestMapping(value = {"/UvoziXmlPost"}, method = RequestMethod.POST)
+    public String uvoziXmlPost(Model model, HttpServletRequest request, @RequestParam(value = "xml", required = false) String xml) throws JAXBException, SQLException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(Knjiga.class);
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+
+        StringReader reader = new StringReader(xml);
+        Knjiga knjiga = (Knjiga) unmarshaller.unmarshal(reader);
+
+
+        HttpSession session = request.getSession(true);
+
+        int id = (int) session.getAttribute("currentSessionId");
+        int risultato = knjiga(knjiga.getNaslov(), knjiga.getAvtor(), "", knjiga.getIsbn(), knjiga.getZalozba(),knjiga.getLetoIzdaje(), knjiga.getPrevod(), knjiga.getIlustracije(), knjiga.getZanr(), knjiga.getPublika(), knjiga.getLokacija(), id);
+
+        knjiga.setIdKnjiga(risultato);
+
+        return "redirect:/komentarji?id=" + knjiga.getIdKnjiga();
+    }
+
+    @RequestMapping(value = {"izbrisiKos"}, method = RequestMethod.GET)
+    public String izbrisiKos(Model model, @RequestParam(value = "id", required = false) int idK)  {
+        model.addAttribute("message", this.message);
+        for (Knjiga knj : kosarica){
+            if (idK==knj.getIdKnjiga()){
+                kosarica.remove(knj);
+                break;
+            }
+        }
+
+
+
+        return "redirect:/kosarica";
+    }
+
+    @RequestMapping(value = {"vrni"}, method = RequestMethod.GET)
+    public String vrni(Model model, @RequestParam(value = "id", required = false) int idK) throws SQLException {
+        model.addAttribute("message", this.message);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        long da = (new Date().getTime()) + (14 * 24 * 3600 * 1000) ;
+        Date dateV = new Date(da);
+        String datum=dateFormat.format(date);
+
+
+
+
+        Connection conn = ConnectionManager.getConnection();
+        String sql = "UPDATE knjiga SET navoljo = ? WHERE idKnjiga = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, 1);  //o izposojeno
+        statement.setInt(2, idK);
+        int rowsUpdated = statement.executeUpdate();
+        String sq2 = "UPDATE izposoja SET datumVrnitve="+"'"+datum+"'"+ "WHERE tk_idKnjiga =?";
+
+        PreparedStatement statement2 = conn.prepareStatement(sq2);
+        statement2.setInt(1, idK);
+
+        int rowsUpdated2 = statement2.executeUpdate();
+
+
+        return "redirect:/profil";
     }
 }
 
