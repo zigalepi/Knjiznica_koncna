@@ -24,27 +24,25 @@
 
                         <div class="row">
                             <div class="col-sm-2">
-                                <select name="izbira1" id="izbirni_seznam_ena">
+                                <select name="izbira1" id="izbirni_seznam_ena" style="margin-top:15px">
                                     <option selected = "selected" value ="naslov">Naslov</option>
                                     <option  value ="avtor">Avtor</option>
                                     <option value="isbn">ISBN</option>
                                     <option value ="zalozba">Založba</option>
                                     <option value="leto">Leto Izdaje</option>
-                                    <option value="prevod">Prevod</option>
-                                    <option value="publika">Ciljna publika</option>
                                 </select>
                             </div>
                         </div>
                     <div class="row">
                         <div class="col-sm-2">
-                            <input type="text" name="iskanje1">
+                            <input type="text" name="iskanje1" style="margin: 10px 0 10px 0">
                         </div>
                     </div>
 
 
                     <div class="row">
                         <div class="col-sm-2">
-                         <input type="submit"value="Išči">
+                         <input id="isci" type="submit"value="Išči">
                             </div>
                     </div>
 
@@ -84,6 +82,7 @@
                             <td class="tIzpis prijavljen"><a href="seznamZelja?id=${knjiga.idKnjiga}">&#9770</a></td>
                             <td class="tIzpis prijavljen"><a href="izvoziXml?id=${knjiga.idKnjiga}">📚</a></td>
                             <c:if test="${knjiga.navoljo==1}"><td class="tIzpis prijavljen"><a href="vkosarico?id=${knjiga.idKnjiga}">&#9870</a></td></c:if>
+                            <c:if test="${knjiga.navoljo==0}"><td class="tIzpis prijavljen">Knjiga ni na voljo</td></c:if>
 
                         </tr>
 

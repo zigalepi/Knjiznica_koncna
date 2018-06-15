@@ -435,27 +435,16 @@ public class MainController {
                 case "isbn":
                     prvo = k.getIsbn() + "";
                     break;
-                case "založba":
-                    prvo = k.getZalozba();
+                case "zalozba":
+                    prvo = k.getZalozba()+"";
                     break;
 
                 case "leto":
                     prvo = k.getLetoIzdaje() + "";
                     break;
-                case "prevod":
-                    prvo = k.getPrevod();
-                    break;
-                case "ilustracije":
-                    prvo = k.getIlustracije();
-                    break;
+
                 case "zanr":
-                    prvo = k.getZanr();
-                    break;
-                case "publika":
-                    prvo = k.getPublika();
-                    break;
-                case "lokacija":
-                    prvo = k.getLokacija();
+                    prvo = k.getZanr()+"";
                     break;
 
             }

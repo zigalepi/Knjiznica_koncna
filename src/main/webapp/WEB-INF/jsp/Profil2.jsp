@@ -27,7 +27,7 @@
                     <p>Ime: ${uporabnik.ime}</p>
                     <p>Priimek: ${uporabnik.priimek}</p>
                     <p>Email: ${uporabnik.email}</p>
-
+                    <a id="spremeni" href="UrediProfil">Uredi profil</a>
                 </div>
 
                 <div class="container1">

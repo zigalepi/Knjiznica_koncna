@@ -102,8 +102,8 @@ h3.reg{
     margin-top:0px;
     margin-bottom:0px;
 }
-#submit-reg,#reset-uredi-profil,#izbrisi{
-    padding: 10px;
+#submit-reg,#reset-uredi-profil,#izbrisi,#spremeni,#komG,#isci{
+    padding: 7px;
     border-radius: 15px;
     background-color: #b6452c;
     color:white;
@@ -186,4 +186,7 @@ ul.seznamKnjig, .seznamKnjig li{
     width:100%;
     background-color:#ddc5a2;
     border-radius: 10px;;
+}
+label.tip{
+    color:white;
 }

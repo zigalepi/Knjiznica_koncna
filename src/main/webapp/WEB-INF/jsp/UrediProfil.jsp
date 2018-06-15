@@ -1,69 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <%@ page contentType="text/html; charset=UTF-8" %>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="js/JavaScript.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Moja Knjiznica</title>
-
+    <%@include file="Links.jsp"%>
 </head>
-<body>
+<body  onload="prijav()">
 <div id="wrapper">
-    <div class="glava">
-        <header style="background-color: cornflowerblue">
-            <div class="nav" style="width:100%" >
-                <div class="row">
-                    <div class="col-sm-2">
-                        <img src="slike/logo.jpg" style="height:120px">
-                    </div>
-
-                    <div class="col-sm-4">
-                        <h1>
-                            MOJA KNJIŽNICA!
-                        </h1>
-                    </div>
-                    <div class="col-sm-4"></div>
-                </div>
-            </div>
-        </header>
-    </div>
-
-    <div class="prijavljenn">
-        <div class="nav">
-            <ul>
-                <li>
-                    <a href="index">Domov</a>
-                </li>
-                <li>
-                    <a href="iskanje">Iskanje knjig</a>
-                </li>
-                <li>
-                    <a href="dodajKnj">Dodaj Knjigo</a>
-                </li>
-                <li  class="active">
-                    <a href="profil">Profil</a>
-                </li>
-                <li style="float:right">
-                    <div class="prijavljen">
-                        <p>Pozdravljen, <%= session.getAttribute( "currentSessionUserName" ) %></p>
-                    </div>
-                </li>
-                <li>
-
-                    <a href="logout">Odjava</a>
-
-                </li>
-
-
-            </ul>
-        </div>
-    </div>
-
+    <%@include file="Menu.jsp"%>
     <br>
 
     <div style="color: red">
@@ -178,7 +122,6 @@
                         <div class="row">
                             <div class="col-sm-2"></div>
                             <div class="col-sm-2"><a id="submit-reg" onclick="preveriReg2(false)" href="#">Spremeni</a></div>
-                            <div class="col-sm-5"><a id="reset-uredi-profil" href="#">Zbriši vse podatke</a></div>
                         </div>
                     </form>
                 </div>

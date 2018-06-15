@@ -127,31 +127,31 @@
                             <div class="container3">
 
                                 <div class="col-sm-3">
-                                    <label>
+                                    <label class="tip">
                                         Mnenje: <input id="idMnenje" name="check"  type="radio" value="mnenje" />
                                     </label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <label>
+                                    <label class="tip">
                                         Revizija: <input id="idRevizija" name="check"  type="radio" value="revizija"/>
                                     </label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <label>
+                                    <label class="tip">
                                         Vprašanje: <input id="idVprasanje" name="check"  type="radio"  value="vprasanje"/>
                                     </label>
                                 </div>
                                 <div class="col-sm-3">
-                                    <label>
+                                    <label class="tip">
                                         Razmislek: <input id="idRazmislek" name="check"  type="radio" value="razmislek" />
                                     </label>
                                 </div>
 
                                    <textarea name="kom" rows="5" cols="94" style = "border: solid 1px black" value="Vnesite željeno besedilo."></textarea>
                                     <br>
-                                   <button onclick="izpisKom">
+                                   <a id="komG" href="izpisKom">
                                       Potrdi
-                                   </button>
+                                   </a>
 
                             </div>
                         </div>
