@@ -19,6 +19,7 @@ public class ProfilController {
 
     @RequestMapping(value = {"/UrediProfil" }, method = {RequestMethod.GET, RequestMethod.POST})
     public String urediProfil(Model model, HttpServletRequest request, @RequestParam(value = "rIme", required = false) String ime, @RequestParam(value = "rPriimek", required = false) String priimek, @RequestParam(value = "rEmail", required = false) String email, @RequestParam(value = "rNaslov", required = false) String naslov, @RequestParam(value = "rKraj", required = false) String kraj, @RequestParam(value = "rPostna", required = false) Integer postna, @RequestParam(value = "rUporabnisko", required = false) String upoIme, @RequestParam(value = "rGeslo", required = false) String geslo, @RequestParam(value = "rGeslo1", required = false) String geslo1) throws SQLException {
+        model.addAttribute("izbira", 5);
         HttpSession session = request.getSession(true);
         if (session.getAttribute("currentSessionId") == null) {
             return "redirect:/";

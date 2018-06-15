@@ -149,9 +149,9 @@
 
                                    <textarea name="kom" rows="5" cols="94" style = "border: solid 1px black" value="Vnesite željeno besedilo."></textarea>
                                     <br>
-                                   <a id="komG" href="izpisKom">
-                                      Potrdi
-                                   </a>
+                                   <input type="submit" id="komG" value="potrdi">
+
+
 
                             </div>
                         </div>

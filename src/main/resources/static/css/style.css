@@ -132,6 +132,8 @@ table.tIzpis{
     margin:0 auto;
     width:100%;
     background-color: darkgray;
+    margin-top:15px;
+    margin-bottom: 15px;
 }
 tr.tIzpis{
     border:1px solid black;

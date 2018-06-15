@@ -399,6 +399,7 @@ public class MainController {
     @RequestMapping(value = {"/iskanjeMetoda"}, method = {RequestMethod.GET, RequestMethod.POST })
     public String iskanjeMetoda(Model model, @RequestParam(value = "izbira1", required = false) String izbira1, @RequestParam(value = "iskanje1", required = false) String iskanje) throws SQLException {
         model.addAttribute("message", this.message);
+        model.addAttribute("izbira", 2);
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session = request.getSession(false);
 
@@ -652,6 +653,7 @@ public class MainController {
     @RequestMapping(value = {"profil"}, method = RequestMethod.GET)
     public String izpisProfil(Model model) throws SQLException {
         model.addAttribute("message", this.message);
+        model.addAttribute("izbira", 5);
         upo=new Uporabnik();
         zelje = new ArrayList<>();
         HttpServletRequest request= ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
@@ -796,7 +798,7 @@ public class MainController {
 
         System.out.println(vsebina+" "+tip+" "+idKnjiga+" "+idU);
 
-        return "knjiga";
+        return "redirect:/komentarji?id="+idKnjiga;
 
     }
 
